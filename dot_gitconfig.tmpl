@@ -2,6 +2,10 @@
 [user]
 	name = Tag Howard
 	email = tag.howard1080@gmail.com
+	{{- if hasKey . "gpgkey" }}
+	signingkey = {{ .gpgkey }}
+	{{- end}}
+
 [core]
     pager = delta
     autocrlf = input
