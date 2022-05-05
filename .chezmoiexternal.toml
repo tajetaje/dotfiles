@@ -1,0 +1,23 @@
+[".oh-my-zsh"]
+    type = "archive"
+    url = "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
+[".oh-my-zsh/custom/themes/powerlevel10k"]
+    type = "archive"
+    url = "https://github.com/romkatv/powerlevel10k/archive/v1.15.0.tar.gz"
+    exact = true
+    stripComponents = 1
+[".asdf"]
+    type = "git-repo"
+    url = "https://github.com/asdf-vm/asdf.git"
+    refreshPeriod = "168h"
+[".config/asdf_data/plugins/nodejs"]
+    type = "git-repo"
+    url = "https://github.com/asdf-vm/asdf-nodejs.git"
+    refreshPeriod = "168h"
+[".config/asdf_data/plugins/python"]
+    type = "git-repo"
+    url = "https://github.com/danhper/asdf-python.git"
+    refreshPeriod = "168h"
