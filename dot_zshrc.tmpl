@@ -74,12 +74,6 @@ fi
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM=$HOME/.config/zsh_custom
 
-{{ if lookPath "asdf" }}
-# asdf version manager variables
-export ASDF_DATA_DIR=$HOME/.config/asdf_data
-
-{{ end }}
-
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -87,7 +81,6 @@ export ASDF_DATA_DIR=$HOME/.config/asdf_data
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git gitignore colored-man-pages)
 
-{{ if lookPath "asdf" }}plugins+=(asdf){{ end}}
 {{ if lookPath "gh" }}plugins+=(gh){{ end }}
 {{ if lookPath "code" }}plugins+=(vscode){{ end }}
 {{ if lookPath "sudo" }}plugins+=(sudo){{ end }}
