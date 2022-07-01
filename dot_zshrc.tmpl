@@ -74,32 +74,40 @@ fi
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM=$HOME/.config/zsh_custom
 
+{{ if lookPath "asdf" }}
 # asdf version manager variables
 export ASDF_DATA_DIR=$HOME/.config/asdf_data
+
+{{ end }}
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git asdf gh gitignore vscode sudo colored-man-pages)
+plugins=(git gitignore colored-man-pages)
+
+{{ if lookPath "asdf" }}plugins+=(asdf){{ end}}
+{{ if lookPath "gh" }}plugins+=(gh){{ end }}
+{{ if lookPath "code" }}plugins+=(vscode){{ end }}
+{{ if lookPath "sudo" }}plugins+=(sudo){{ end }}
 
 {{ if eq .chezmoi.os "darwin" }}
-	# darwin
-	plugins+=(osx)
+# darwin
+plugins+=(osx)
 {{ else if eq .chezmoi.os "linux" }}
-	# linux
-	{{ if eq .chezmoi.osRelease.id "arch" }}
-		# arch
-		plugins+=(archlinux)
-	{{ else if eq .chezmoi.os "ubuntu" }}
-		# linux
-		plugins+=(ubuntu)
-	{{ else }}
-		# other distro
-	{{ end }}
+# linux
+{{ if eq .chezmoi.osRelease.id "arch" }}
+# arch
+plugins+=(archlinux)
+{{ else if eq .chezmoi.os "ubuntu" }}
+# linux
+plugins+=(ubuntu)
 {{ else }}
-	# other operating system
+# unkown linux distro
+{{ end }}
+{{ else }}
+# unkown operating system
 {{ end }}
 
 source $ZSH/oh-my-zsh.sh
@@ -113,15 +121,29 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
+  {{ if lookPath "vim" }}
   export EDITOR='vim'
+  {{ else if lookPath "vi" }}
+  export EDITOR='vi'
+  {{ else if lookPath "nano" }}
+  export EDITOR='nano'
+  {{ end }}
 else
+  {{ if lookPath "nvim" }}
   export EDITOR='nvim'
+  {{ else if lookPath "vim" }}
+  export EDITOR='vim'     
+  {{ else if lookPath "vi" }}
+  export EDITOR='vi'
+  {{ else if lookPath "nano" }}
+  export EDITOR='nano'
+  {{ end }}
 fi
 
-export PAGER='bat'
+{{ if lookPath "bat" }}export PAGER='bat'{{ end }}
 
-# Compilation flags
 {{ if eq .chezmoi.arch "amd64" }}
+# Compilation flags
 export ARCHFLAGS="-arch x86_64"
 {{ end}}
 
@@ -133,6 +155,8 @@ export ARCHFLAGS="-arch x86_64"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+{{ if lookPath (joinPath .chezmoi.homeDir "Android" "Sdk" "platform-tools" "adb") }}export PATH="{{ joinPath .chezmoi.homeDir "Android" "Sdk" "platform-tools" }}:$PATH"{{ end }}
+{{ if lookPath (joinPath .chezmoi.homeDir "Android" "Sdk" "emulator" "emulator") }}export PATH="{{ joinPath .chezmoi.homeDir "Android" "Sdk" "emulator" }}:$PATH"{{ end }}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

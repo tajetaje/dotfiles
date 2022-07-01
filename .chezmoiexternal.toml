@@ -17,7 +17,3 @@
     type = "git-repo"
     url = "https://github.com/asdf-vm/asdf-nodejs.git"
     refreshPeriod = "168h"
-[".config/asdf_data/plugins/python"]
-    type = "git-repo"
-    url = "https://github.com/danhper/asdf-python.git"
-    refreshPeriod = "168h"

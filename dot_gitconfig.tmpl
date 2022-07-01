@@ -7,11 +7,16 @@
 	{{- end}}
 
 [core]
+{{ if lookPath "delta" }}
     pager = delta
+{{end}}
     autocrlf = input
 
 [init]
 	defaultBranch = main
+
+[pull]
+        rebase = false
 
 # Standard UI settings
 [color]
@@ -39,6 +44,7 @@
 [diff]
     colorMoved = default
 
+{{ if lookPath "delta" }}
 # Delta settings
 [interactive]
     diffFilter = delta --color-only
@@ -46,7 +52,8 @@
 [delta]
     navigate = true  # use n and N to move between diff sections
     line-numbers = true
-
+{{ end }}
+{{- if hasKey . "gpgkey" }}
 [commit]
     gpgsign = true
-
+{{- end}}
